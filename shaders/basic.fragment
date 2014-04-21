@@ -1,0 +1,12 @@
+#version 140
+
+uniform sampler2D textureUniform;
+
+in vec2 fragUV;
+
+out vec4 finalColor;
+
+void main(){
+    finalColor = texture(textureUniform, fragUV);
+    //finalColor = vec4(0.0, 0.0, 1.0, 1.0);
+}
