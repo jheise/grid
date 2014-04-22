@@ -43,6 +43,7 @@ class Engine {
         float moveSpeed;
         float mouseSensitivity;
         int mouseX, mouseY;
+        bool pause;
 
         Camera* camera;
 

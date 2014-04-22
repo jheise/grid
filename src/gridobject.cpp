@@ -131,7 +131,8 @@ GridObject::GridObject(Shader* shader_reference, const std::string& modelPath, c
             printf("attempting to get texture\n");
 
             if(pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &newpath, NULL, NULL, NULL, NULL) == AI_SUCCESS){
-                std::string texture_path = modelPath + std::string( "/images/") + newpath.data;
+                //std::string texture_path = modelPath + std::string( "/images/") + newpath.data;
+                std::string texture_path = modelPath + std::string( "/") + newpath.data;
                 printf( "texture is at %s\n",texture_path.c_str());
                 texture = new Texture(texture_path);
             }

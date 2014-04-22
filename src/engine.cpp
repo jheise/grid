@@ -70,6 +70,7 @@ Engine::Engine( float width, float height){
     camera = new Camera();
     moveSpeed = 4.0;
     mouseSensitivity = 0.1;
+    pause = false;
 }
 
 void Engine::run(){
@@ -142,7 +143,7 @@ void Engine::run(){
     //GridObject *shape = new GridObject(basicshader,std::string("../models/blend-cube"), std::string("blend-cube.obj"));
     GridObject* shape = new GridObject(basicshader,std::string("../models/simple_plate_obj"), std::string("simple_plate.obj"));
     objects.push_back(shape);
-    shape = new GridObject(basicshader,std::string("../models/blend-cube"), std::string("blend-cube.obj"));
+    shape = new GridObject(basicshader,std::string("../models/spark"), std::string("skpfile.dae"));
     objects.push_back(shape);
 
     printf("Running...\t\t");
@@ -166,7 +167,7 @@ void Engine::run(){
 
 void Engine::display(){
     //setup
-    glClearColor(1, 1, 1, 1);
+    glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glm::mat4 view = camera->matrix();
@@ -194,9 +195,11 @@ void Engine::update(){
     tick = thisTime - lastTime;
     lastTime = thisTime;
 
-    //update all objects
-    for(int i = 0; i < objects.size(); i++){
-        objects[i]->update(tick);
+    if(!pause){
+        //update all objects
+        for(int i = 0; i < objects.size(); i++){
+            objects[i]->update(tick);
+        }
     }
 
     //replace with actual keyboard subsystem
@@ -218,6 +221,13 @@ void Engine::update(){
     glfwGetMousePos(&mouseX, &mouseY);
     camera->offsetOrientation(mouseSensitivity * mouseY, mouseSensitivity * mouseX);
     glfwSetMousePos(0,0);
+
+    //pause updates
+    if(glfwGetKey(GLFW_KEY_SPACE)){
+        pause = true;
+    }else{
+        pause = false;
+    }
 }
 
 Engine::~Engine(){
