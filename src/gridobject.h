@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <boost/filesystem.hpp>
 
 //opengl libs
 #include <GL/glew.h>
@@ -19,7 +20,8 @@
 
 //grid files
 #include "shader.h"
-#include "texture.h"
+#include "mesh.h"
+#include "utils.h"
 
 class GridObject {
     public:
@@ -35,7 +37,8 @@ class GridObject {
 
     private:
         Shader* shader;
-        Texture* texture;
+        std::vector<Mesh*> meshes;  //all of the meshes
+        std::vector<Texture*> textures; //all of the textures
         GLuint vao, index, vertex, uv, normal, count, umodel, ucamera, utexture;
         glm::mat4 identity;
         float degree;

@@ -25,17 +25,17 @@ class Mesh{
     public:
         Mesh();
 
-        Mesh(Shader*, aiMesh&);
+        Mesh(Shader*, const std::string&, aiMesh*);
 
         ~Mesh();
 
-        void display(glm::mat4&);
+        void display(glm::mat4&, const std::vector<Texture*>&);
 
         void update(float);
 
     private:
         Shader* shader;
-        Texture* texture;
         GLuint vao, index, vertex, uv, normal, count, umodel, ucamera, utexture;
+        unsigned int material;
 
 };

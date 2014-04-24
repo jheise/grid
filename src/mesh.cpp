@@ -1,43 +1,18 @@
-#include "gridobject.h"
-GridObject::GridObject(){
+#include "mesh.h"
+Mesh::Mesh(){
 };
 
-GridObject::GridObject(Shader* shader_reference, const std::string& modelPath, const std::string& modelName){
+Mesh::Mesh(Shader* shader_reference, const std::string& modelPath, aiMesh* mesh){
     shader = shader_reference;
+    material = mesh->mMaterialIndex;
 
-    printf("Loading model: %s\n", modelPath.c_str());
-    //check file exists
-    std::string fullPath = modelPath + std::string("/models/") + modelName;
-    std::ifstream fin(fullPath.c_str());
-    if(!fin.fail()){
-        fin.close();
-    }else{
-        throw std::runtime_error("could not open file" + fullPath);
-    }
-
-    //file can be opened, import it
-    Assimp::Importer importer;
-    const aiScene* scene = importer.ReadFile( fullPath,
-            aiProcessPreset_TargetRealtime_Fast |
-            //aiProcess_CalcTangentSpace      |
-            aiProcess_Triangulate           |
-            aiProcess_GenSmoothNormals      |
-            aiProcess_FlipUVs
-        //aiProcess_JoinIdenticalVertices |
-        //aiProcess_SortByPType);
-    );
-    if(!scene){
-        throw std::runtime_error(importer.GetErrorString());
-    }
-    printf("imported %s\n",modelPath.c_str());
-    fflush(stdout);
 
     std::vector<unsigned int> indices;
     std::vector<float> vertices;
     std::vector<float> uvs;
     std::vector<float> normals;
 
-    aiMesh* mesh = scene->mMeshes[0];
+    //aiMesh* mesh = scene->mMeshes[0];
 
     int numOfFaces = mesh->mNumFaces;
     int numOfIndices = numOfFaces * 3;
@@ -114,62 +89,41 @@ GridObject::GridObject(Shader* shader_reference, const std::string& modelPath, c
     glBindVertexArray(0);
 
     //setup identity and position
-    identity = glm::mat4();
-    umodel = shader->handleUniform("model");
-    ucamera = shader->handleUniform("camera");
-    utexture = shader->handleUniform("textureUniform");
-    degree = 0;
+    //printf( "numMaterials is %d\n", scene->mNumMaterials);
 
-    printf( "numMaterials is %d\n", scene->mNumMaterials);
+    ////load texture
+    //for(int i=0; i < scene->mNumMaterials; i++){
+        //const aiMaterial* pMaterial = scene->mMaterials[i];
+        //printf("texture count is %d\n",pMaterial->GetTextureCount(aiTextureType_DIFFUSE));
+        //if(pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0){
+            //aiString newpath;
+            //printf("attempting to get texture\n");
 
-    //load texture
-    for(int i=0; i < scene->mNumMaterials; i++){
-        const aiMaterial* pMaterial = scene->mMaterials[i];
-        printf("texture count is %d\n",pMaterial->GetTextureCount(aiTextureType_DIFFUSE));
-        if(pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0){
-            aiString newpath;
-            printf("attempting to get texture\n");
-
-            if(pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &newpath, NULL, NULL, NULL, NULL) == AI_SUCCESS){
-                //std::string texture_path = modelPath + std::string( "/images/") + newpath.data;
-                std::string texture_path = modelPath + std::string( "/") + newpath.data;
-                printf( "texture is at %s\n",texture_path.c_str());
-                texture = new Texture(texture_path);
-            }
-        }
-    }
+            //if(pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &newpath, NULL, NULL, NULL, NULL) == AI_SUCCESS){
+                ////std::string texture_path = modelPath + std::string( "/images/") + newpath.data;
+                //std::string texture_path = modelPath + std::string( "/") + newpath.data;
+                //printf( "texture is at %s\n",texture_path.c_str());
+                //texture = new Texture(texture_path);
+            //}
+        //}
+    //}
 
 }
 
-GridObject::~GridObject(){
+Mesh::~Mesh(){
     printf("OBJECT GOES AWAY NOW\n");
 }
 
-void GridObject::display(glm::mat4& view){
-    //turn on shader to use
-    shader->activate();
-
-
-    //update model
-    glUniformMatrix4fv(umodel, 1, GL_FALSE, &identity[0][0]);
-    //push current camera position
-    glUniformMatrix4fv(ucamera, 1, GL_FALSE, &view[0][0]);
-
+void Mesh::display(glm::mat4& view, const std::vector<Texture*>& textures){
     //bind vao
     glBindVertexArray(vao);
     //bind texture
-    texture->bind(1);
+    //printf("material %d textures.size %d textures.capacity%d\n", material, (int)textures.size(), (int)textures.capacity());
+    textures[material]->bind(1);
     //draw triangles
     glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, NULL);
     //texture->unbind();
-
 }
 
-void GridObject::update(float tick){
-    //update code goes here
-    degree += tick * 180.0f;
-    if(degree > 360.0f){
-        degree -= 360.0f;
-    }
-    identity = glm::rotate(glm::mat4(), degree, glm::vec3(0,1,1));
+void Mesh::update(float tick){
 }

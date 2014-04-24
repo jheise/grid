@@ -141,10 +141,14 @@ void Engine::run(){
     //replace with python making objects
     printf("building geometry\n");
     //GridObject *shape = new GridObject(basicshader,std::string("../models/blend-cube"), std::string("blend-cube.obj"));
-    GridObject* shape = new GridObject(basicshader,std::string("../models/simple_plate_obj"), std::string("simple_plate.obj"));
+    //GridObject* shape = new GridObject(basicshader,std::string("../models/simple_plate_obj"), std::string("simple_plate.obj"));
+    //objects.push_back(shape);
+    //shape = new GridObject(basicshader,std::string("../models/spark"), std::string("skpfile.dae"));
+    //shape = new GridObject(basicshader,std::string("../models/stankbot"), std::string("stankbot.dae"));
+    GridObject* shape = new GridObject(basicshader, std::string("../models/TARDIS"), std::string("TARDIS.dae"));
     objects.push_back(shape);
-    shape = new GridObject(basicshader,std::string("../models/spark"), std::string("skpfile.dae"));
-    objects.push_back(shape);
+    //shape = new GridObject(basicshader, std::string("../models/StreetLamp"), std::string("StreetLamp.dae"));
+    //objects.push_back(shape);
 
     printf("Running...\t\t");
     fflush(stdout);
@@ -167,7 +171,7 @@ void Engine::run(){
 
 void Engine::display(){
     //setup
-    glClearColor(0, 0, 0, 1);
+    glClearColor(1, 1, 1, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glm::mat4 view = camera->matrix();
