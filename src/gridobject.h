@@ -1,3 +1,4 @@
+#pragma once
 //standard libs
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,7 +21,7 @@
 
 //grid files
 #include "shader.h"
-#include "mesh.h"
+#include "model.h"
 #include "utils.h"
 
 class GridObject {
@@ -37,11 +38,9 @@ class GridObject {
 
     private:
         Shader* shader;
-        std::vector<Mesh*> meshes;  //all of the meshes
-        std::vector<Texture*> textures; //all of the textures
-        GLuint vao, index, vertex, uv, normal, count, umodel, ucamera, utexture;
+        Model* model;
+        GLuint umodel, ucamera, utexture;
         glm::mat4 identity;
         float degree;
-
 
 };

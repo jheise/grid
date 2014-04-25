@@ -11,6 +11,7 @@ add_executable(grid
     src/shader.cpp
     src/texture.cpp
     src/mesh.cpp
+    src/model.cpp
     src/utils.cpp
     src/gridobject.cpp
     src/Camera.cpp

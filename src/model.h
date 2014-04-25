@@ -21,20 +21,21 @@
 //grid files
 #include "shader.h"
 #include "texture.h"
+#include "mesh.h"
+#include "utils.h"
 
-class Mesh{
+class Model{
     public:
-        Mesh();
+        Model();
 
-        Mesh(aiMesh*);
+        Model(const std::string&, const std::string&);
 
-        ~Mesh();
+       ~Model();
 
-        void display(glm::mat4&, const std::vector<Texture*>&);
+        void display(glm::mat4&);
 
     private:
-        /*Texture* texture;*/
-        GLuint vao, index, vertex, uv, normal, count, umodel, ucamera, utexture;
-        unsigned int material;
 
+        std::vector<Mesh*> meshes;  //all of the meshes
+        std::vector<Texture*> textures; //all of the textures
 };

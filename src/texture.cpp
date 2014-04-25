@@ -1,7 +1,6 @@
 #include "texture.h"
 
 Texture::Texture(const std::string& image_path){
-    printf("loading %s\n", image_path.c_str());
     filename = image_path;
 
     ILuint imageID;
@@ -14,7 +13,6 @@ Texture::Texture(const std::string& image_path){
     if(!success){
         throw std::runtime_error("could not load image");
     }
-    printf("%s successfully loaded\n", filename.c_str());
 
     ILinfo imageInfo;
     iluGetImageInfo(&imageInfo);
@@ -25,7 +23,6 @@ Texture::Texture(const std::string& image_path){
     success = ilConvertImage(IL_RGB, IL_UNSIGNED_BYTE);
     if(!success){
         error = ilGetError();
-        printf("got error %d\n", error);
         throw std::runtime_error("got error converting image");
     }
 
@@ -58,7 +55,6 @@ Texture::~Texture(){
 }
 
 void Texture::bind(GLuint uniform){
-    //printf("bind %s for %d\n", filename.c_str(), uniform);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture_id);
     glUniform1i(uniform, texture_id);

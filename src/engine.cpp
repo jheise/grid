@@ -134,7 +134,6 @@ void Engine::run(){
     camera->setViewportAspectRatio(screenwidth/screenheight);
 
     //replace with shader factory
-    printf("loading shader");
     basicshader = new Shader(std::string("../shaders/basic.vertex"), std::string("../shaders/basic.fragment"));
     basicshader->assemble();
 

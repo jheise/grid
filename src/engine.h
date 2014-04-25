@@ -1,3 +1,4 @@
+#pragma once
 //C++ libs
 #include <stdio.h>
 #include <stdlib.h>

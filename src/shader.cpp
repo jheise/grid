@@ -20,12 +20,10 @@ void Shader::assemble(){
     vertshader = Shader::handleShader(vertex_path, GL_VERTEX_SHADER);
     fragshader = Shader::handleShader(fragment_path, GL_FRAGMENT_SHADER);
 
-    //printf("Assemble: shaderprogram is %d\n", shaderprogram);
     shaderprogram = glCreateProgram();
     if(shaderprogram == 0){
         throw std::runtime_error("glCreateProgram failed");
     }
-    //printf("Assemble: shaderprogram is %d\n", shaderprogram);
 
     glAttachShader(shaderprogram, vertshader);
     glAttachShader(shaderprogram, fragshader);
@@ -46,12 +44,9 @@ void Shader::assemble(){
         glDeleteProgram(shaderprogram);
         throw std::runtime_error(msg);
     }
-
-    printf("Shader Assembled!\n");
 }
 
 GLuint Shader::handleShader( const std::string& shaderpath, GLenum shaderType){
-    printf("assembling %s\n", shaderpath.c_str());
     std::ifstream f;
     f.open(shaderpath.c_str(), std::ios::in | std::ios::binary);
     if(!f.is_open()){
@@ -92,11 +87,8 @@ GLuint Shader::handleShader( const std::string& shaderpath, GLenum shaderType){
 
 
 GLuint Shader::handleUniform( const std::string& uniform){
-    printf("handling Uniform %s\n", uniform.c_str());
     GLuint uniform_value = -1;
     uniform_value = glGetUniformLocation(shaderprogram, uniform.c_str());
-    //printf("shaderprogram is %d\n", shaderprogram);
-    //printf("%s is value %d\n",uniform.c_str(), uniform_value);
     if(uniform_value == -1){
         throw std::runtime_error(std::string("program uniform not found:"));
     }
