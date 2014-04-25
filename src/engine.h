@@ -13,6 +13,9 @@
 #include <GL/glew.h>
 #include <GL/glfw.h>
 
+//python
+#include <Python.h>
+
 //grid files
 #include "shader.h"
 #include "gridobject.h"
@@ -23,7 +26,7 @@
 
 class Engine {
     public:
-        Engine(float, float);
+        Engine(char*,float, float);
 
         ~Engine();
 
@@ -54,5 +57,6 @@ class Engine {
 
         //replace later
         Shader* basicshader;
+        char* arg_0;
 
 };

@@ -63,7 +63,7 @@ void Engine::glPrintError(){
     }
 }
 
-Engine::Engine( float width, float height){
+Engine::Engine(char* arg0, float width, float height){
     screenwidth = width;
     screenheight = height;
     lastTime = glfwGetTime();
@@ -71,6 +71,7 @@ Engine::Engine( float width, float height){
     moveSpeed = 4.0;
     mouseSensitivity = 0.1;
     pause = false;
+    arg_0 = arg0;
 }
 
 void Engine::run(){
@@ -129,6 +130,13 @@ void Engine::run(){
 
     printf("engine started with %f %f\n", screenwidth, screenheight);
 
+    //start python
+    printf("Initializing python\n");
+    Py_SetProgramName(arg_0);
+    Py_Initialize();
+    PyRun_SimpleString("from time import time,ctime\nprint 'Python Initialized'\nprint 'Today is', ctime(time())\n");
+    Py_Finalize();
+
     //initialize camera
     camera->setPosition(glm::vec3(0,0,8));
     camera->setViewportAspectRatio(screenwidth/screenheight);
@@ -145,8 +153,8 @@ void Engine::run(){
     //shape = new GridObject(basicshader,std::string("../models/spark"), std::string("skpfile.dae"));
     //shape = new GridObject(basicshader,std::string("../models/stankbot"), std::string("stankbot.dae"));
     GridObject* shape = new GridObject(basicshader, std::string("../models/TARDIS"), std::string("TARDIS.dae"));
+    //GridObject* shape = new GridObject(basicshader, std::string("../models/StreetLamp"), std::string("StreetLamp.dae"));
     objects.push_back(shape);
-    //shape = new GridObject(basicshader, std::string("../models/StreetLamp"), std::string("StreetLamp.dae"));
     //objects.push_back(shape);
 
     printf("Running...\t\t");

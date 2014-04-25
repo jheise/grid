@@ -11,7 +11,7 @@ float screenheight = 600.0f;
 
 int main(int argc, char *argv[]){
     try{
-        Engine engine = Engine(screenwidth, screenheight);
+        Engine engine = Engine(argv[0], screenwidth, screenheight);
         engine.run();
         printf("Grid Online\n");
     } catch(...){
