@@ -15,18 +15,23 @@
 
 //python
 #include <Python.h>
+#include <boost/python.hpp>
+#include <boost/python/module.hpp>
+#include <boost/python/def.hpp>
 
 //grid files
 #include "shader.h"
 #include "gridobject.h"
 #include "Camera.h"
 #include "texture.h"
+#include "objectfactory.h"
+#include "scriptengine.h"
 
 
 
 class Engine {
     public:
-        Engine(char*,float, float);
+        Engine(int ,char**,float, float);
 
         ~Engine();
 
@@ -51,12 +56,12 @@ class Engine {
 
         Camera* camera;
 
-        std::vector<GridObject*> objects; //interactive 3d objects
-        std::vector<GridObject*> scenary; //static 3d objects
-        std::vector<GridObject*> uielems; //ui elements
+        ObjectFactory* factory;
+        ScriptingEngine* script;
 
         //replace later
         Shader* basicshader;
-        char* arg_0;
+        int argc;
+        char** argv;
 
 };

@@ -63,7 +63,7 @@ void Engine::glPrintError(){
     }
 }
 
-Engine::Engine(char* arg0, float width, float height){
+Engine::Engine(int arg_c, char** arg_v, float width, float height){
     screenwidth = width;
     screenheight = height;
     lastTime = glfwGetTime();
@@ -71,7 +71,9 @@ Engine::Engine(char* arg0, float width, float height){
     moveSpeed = 4.0;
     mouseSensitivity = 0.1;
     pause = false;
-    arg_0 = arg0;
+    argc = arg_c;
+    argv = arg_v;
+    //arg_0 = arg0;
 }
 
 void Engine::run(){
@@ -130,32 +132,23 @@ void Engine::run(){
 
     printf("engine started with %f %f\n", screenwidth, screenheight);
 
+    //create object factory
+    factory = new ObjectFactory();
+
     //start python
     printf("Initializing python\n");
-    Py_SetProgramName(arg_0);
-    Py_Initialize();
-    PyRun_SimpleString("from time import time,ctime\nprint 'Python Initialized'\nprint 'Today is', ctime(time())\n");
-    Py_Finalize();
+    ScriptingEngine* script  = new ScriptingEngine(factory);
+    //Py_SetProgramName(argv[0]);
+    //Py_Initialize();
+    //PySys_SetArgv(argc, argv);
 
     //initialize camera
     camera->setPosition(glm::vec3(0,0,8));
     camera->setViewportAspectRatio(screenwidth/screenheight);
 
-    //replace with shader factory
-    basicshader = new Shader(std::string("../shaders/basic.vertex"), std::string("../shaders/basic.fragment"));
-    basicshader->assemble();
 
-    //replace with python making objects
+    //Load models from python
     printf("building geometry\n");
-    //GridObject *shape = new GridObject(basicshader,std::string("../models/blend-cube"), std::string("blend-cube.obj"));
-    //GridObject* shape = new GridObject(basicshader,std::string("../models/simple_plate_obj"), std::string("simple_plate.obj"));
-    //objects.push_back(shape);
-    //shape = new GridObject(basicshader,std::string("../models/spark"), std::string("skpfile.dae"));
-    //shape = new GridObject(basicshader,std::string("../models/stankbot"), std::string("stankbot.dae"));
-    GridObject* shape = new GridObject(basicshader, std::string("../models/TARDIS"), std::string("TARDIS.dae"));
-    //GridObject* shape = new GridObject(basicshader, std::string("../models/StreetLamp"), std::string("StreetLamp.dae"));
-    objects.push_back(shape);
-    //objects.push_back(shape);
 
     printf("Running...\t\t");
     fflush(stdout);
@@ -172,6 +165,7 @@ void Engine::run(){
             glfwCloseWindow();
         }
     }
+    //Py_Finalize();
     glfwTerminate();
     printf("Done.\n");
 }
@@ -184,6 +178,7 @@ void Engine::display(){
     glm::mat4 view = camera->matrix();
 
     //Render all models
+    std::vector<GridObject*> objects = factory->get_objects();
     for(int i = 0; i < objects.size(); i++){
         objects[i]->display(view);
     }
@@ -208,6 +203,7 @@ void Engine::update(){
 
     if(!pause){
         //update all objects
+        std::vector<GridObject*> objects = factory->get_objects();
         for(int i = 0; i < objects.size(); i++){
             objects[i]->update(tick);
         }
@@ -242,10 +238,7 @@ void Engine::update(){
 }
 
 Engine::~Engine(){
-    for(int i = 0; i < objects.size(); i++){
-        delete objects[i];
-    }
-    delete basicshader;
+    delete factory;
     delete camera;
 
     printf("BYEBYE\n");
