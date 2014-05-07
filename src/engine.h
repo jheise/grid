@@ -26,6 +26,13 @@
 #include "texture.h"
 #include "objectfactory.h"
 #include "scriptengine.h"
+#include "event.h"
+#include "eventqueue.h"
+#include "keyboardhandler.h"
+#include "cameralistener.h"
+#include "escapelistener.h"
+#include "textobject.h"
+#include "console.h"
 
 
 
@@ -56,8 +63,14 @@ class Engine {
 
         Camera* camera;
 
-        ObjectFactory* factory;
-        ScriptingEngine* script;
+        ObjectFactory*      factory;
+        EventQueue*         queue;
+        ScriptingEngine*    script;
+        KeyboardHandler*    keyboard;
+        CameraListener*     clistener;
+        EscapeListener*     elistener;
+        TextObject*         textobj;
+        Console*            console;
 
         //replace later
         Shader* basicshader;

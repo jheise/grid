@@ -24,6 +24,9 @@ class ScriptingEngine {
 
         ~ScriptingEngine();
 
+        void execute_command(const std::string&);
+
     private:
         ObjectFactory* factory;
+        boost::python::object main_namespace;
 };

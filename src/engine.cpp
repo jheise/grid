@@ -1,79 +1,19 @@
 #include "engine.h"
 
-void Engine::glPrintError(){
-    GLenum errorCode = glGetError();
-
-    if (errorCode != GL_NO_ERROR)
-    {
-        std::string error = "unknown error";
-        std::string description  = "no description";
-
-        // Decode the error code
-        switch (errorCode)
-        {
-            case GL_INVALID_ENUM :
-            {
-                error = "GL_INVALID_ENUM";
-                description = "an unacceptable value has been specified for an enumerated argument";
-                break;
-            }
-
-            case GL_INVALID_VALUE :
-            {
-                error = "GL_INVALID_VALUE";
-                description = "a numeric argument is out of range";
-                break;
-            }
-
-            case GL_INVALID_OPERATION :
-            {
-                error = "GL_INVALID_OPERATION";
-                description = "the specified operation is not allowed in the current state";
-                break;
-            }
-            case GL_STACK_OVERFLOW :
-            {
-                error = "GL_STACK_OVERFLOW";
-                description = "this command would cause a stack overflow";
-                break;
-            }
-
-            case GL_STACK_UNDERFLOW :
-            {
-                error = "GL_STACK_UNDERFLOW";
-                description = "this command would cause a stack underflow";
-                break;
-            }
-            case GL_OUT_OF_MEMORY :
-            {
-                error = "GL_OUT_OF_MEMORY";
-                description = "there is not enough memory left to execute the command";
-                break;
-            }
-
-            case GL_INVALID_FRAMEBUFFER_OPERATION_EXT :
-            {
-                error = "GL_INVALID_FRAMEBUFFER_OPERATION_EXT";
-                description = "the object bound to FRAMEBUFFER_BINDING_EXT is not \"framebuffer complete\"";
-                break;
-            }
-        }
-        std::cerr << "OpenGL Error: "  << error << ", " << description << std::endl;
-        exit(1);
-    }
-}
-
 Engine::Engine(int arg_c, char** arg_v, float width, float height){
     screenwidth = width;
     screenheight = height;
     lastTime = glfwGetTime();
     camera = new Camera();
+    queue  = new EventQueue();
+    keyboard  = new KeyboardHandler(queue);
+    clistener = new CameraListener(camera, 4.0f);
+    elistener = new EscapeListener();
     moveSpeed = 4.0;
     mouseSensitivity = 0.1;
     pause = false;
     argc = arg_c;
     argv = arg_v;
-    //arg_0 = arg0;
 }
 
 void Engine::run(){
@@ -138,6 +78,8 @@ void Engine::run(){
     //start python
     printf("Initializing python\n");
     ScriptingEngine* script  = new ScriptingEngine(factory);
+    textobj = new TextObject();
+    console = new Console(textobj, script);
     //Py_SetProgramName(argv[0]);
     //Py_Initialize();
     //PySys_SetArgv(argc, argv);
@@ -161,9 +103,9 @@ void Engine::run(){
         update();
         display();
 
-        if(glfwGetKey(GLFW_KEY_ESC)){
-            glfwCloseWindow();
-        }
+        //if(glfwGetKey(GLFW_KEY_ESC)){
+            //glfwCloseWindow();
+        //}
     }
     //Py_Finalize();
     glfwTerminate();
@@ -187,6 +129,8 @@ void Engine::display(){
     //Render model related text
 
     //Render UI elements
+    //textobj->render_text("Hello World", -0.95f, 0.83f, 2.0/1366, 2.0/768);
+    console->render();
 
     //clean up
     glBindVertexArray(0);
@@ -201,6 +145,9 @@ void Engine::update(){
     tick = thisTime - lastTime;
     lastTime = thisTime;
 
+    //pass camera and tick to input handler
+    keyboard->handle_input();
+
     if(!pause){
         //update all objects
         std::vector<GridObject*> objects = factory->get_objects();
@@ -209,19 +156,13 @@ void Engine::update(){
         }
     }
 
-    //replace with actual keyboard subsystem
-    //forward back
-    if(glfwGetKey('S')){
-        camera->offsetPosition( tick * moveSpeed * -camera->forward());
-    }else if(glfwGetKey('W')){
-        camera->offsetPosition( tick * moveSpeed * camera->forward());
-    }
-
-    //left right
-    if(glfwGetKey('A')){
-        camera->offsetPosition( tick * moveSpeed * -camera->right());
-    }else if(glfwGetKey('D')){
-        camera->offsetPosition( tick * moveSpeed * camera->right());
+    Event* current_event;
+    while(!queue->empty()){
+        current_event = queue->pop_event();
+        clistener->receive(current_event, tick);
+        elistener->receive(current_event, tick);
+        console->receive(current_event, tick);
+        delete( current_event);
     }
 
     //mouse
@@ -242,4 +183,67 @@ Engine::~Engine(){
     delete camera;
 
     printf("BYEBYE\n");
+}
+
+void Engine::glPrintError(){
+    GLenum errorCode = glGetError();
+
+    if (errorCode != GL_NO_ERROR)
+    {
+        std::string error = "unknown error";
+        std::string description  = "no description";
+
+        // Decode the error code
+        switch (errorCode)
+        {
+            case GL_INVALID_ENUM :
+            {
+                error = "GL_INVALID_ENUM";
+                description = "an unacceptable value has been specified for an enumerated argument";
+                break;
+            }
+
+            case GL_INVALID_VALUE :
+            {
+                error = "GL_INVALID_VALUE";
+                description = "a numeric argument is out of range";
+                break;
+            }
+
+            case GL_INVALID_OPERATION :
+            {
+                error = "GL_INVALID_OPERATION";
+                description = "the specified operation is not allowed in the current state";
+                break;
+            }
+            case GL_STACK_OVERFLOW :
+            {
+                error = "GL_STACK_OVERFLOW";
+                description = "this command would cause a stack overflow";
+                break;
+            }
+
+            case GL_STACK_UNDERFLOW :
+            {
+                error = "GL_STACK_UNDERFLOW";
+                description = "this command would cause a stack underflow";
+                break;
+            }
+            case GL_OUT_OF_MEMORY :
+            {
+                error = "GL_OUT_OF_MEMORY";
+                description = "there is not enough memory left to execute the command";
+                break;
+            }
+
+            case GL_INVALID_FRAMEBUFFER_OPERATION_EXT :
+            {
+                error = "GL_INVALID_FRAMEBUFFER_OPERATION_EXT";
+                description = "the object bound to FRAMEBUFFER_BINDING_EXT is not \"framebuffer complete\"";
+                break;
+            }
+        }
+        std::cerr << "OpenGL Error: "  << error << ", " << description << std::endl;
+        exit(1);
+    }
 }
