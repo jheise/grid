@@ -26,7 +26,11 @@ class ScriptingEngine {
 
         void execute_command(const std::string&);
 
+        std::string get_output();
+
     private:
         ObjectFactory* factory;
         boost::python::object main_namespace;
+        PyObject* catcher;
+        PyObject* output;
 };

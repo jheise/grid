@@ -19,3 +19,17 @@ std::string find_file(const std::string& fileroot, const std::string& filename){
     }
     throw std::runtime_error("file not found");
 }
+
+std::vector<std::string> split_string(const std::string& str, const std::string& delimiter){
+    std::vector<std::string> strings;
+
+    std::string::size_type pos = 0;
+    std::string::size_type prev = 0;
+    while((pos = str.find(delimiter, prev)) != std::string::npos){
+        strings.push_back(str.substr(prev, pos - prev));
+        prev = pos + 1;
+    }
+
+    strings.push_back(str.substr(prev));
+    return strings;
+}

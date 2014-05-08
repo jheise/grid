@@ -25,13 +25,21 @@ void KeyboardHandler::handle_input(){
 
     if(glfwGetKey('B')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('b');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('B');
+        }else{
+            new_key->set_key('b');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('C')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('c');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('C');
+        }else{
+            new_key->set_key('c');
+        }
         queue->push_event(new_key);
     }
 
@@ -47,25 +55,41 @@ void KeyboardHandler::handle_input(){
 
     if(glfwGetKey('E')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('e');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('E');
+        }else{
+            new_key->set_key('e');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('F')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('f');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('F');
+        }else{
+            new_key->set_key('f');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('G')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('g');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('G');
+        }else{
+            new_key->set_key('g');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('H')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('h');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('H');
+        }else{
+            new_key->set_key('h');
+        }
         queue->push_event(new_key);
     }
 
@@ -81,50 +105,82 @@ void KeyboardHandler::handle_input(){
 
     if(glfwGetKey('J')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('j');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('J');
+        }else{
+            new_key->set_key('j');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('K')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('k');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('K');
+        }else{
+            new_key->set_key('k');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('L')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('l');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('L');
+        }else{
+            new_key->set_key('l');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('M')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('m');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('M');
+        }else{
+            new_key->set_key('m');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('N')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('n');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('N');
+        }else{
+            new_key->set_key('n');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('O')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('o');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('O');
+        }else{
+            new_key->set_key('o');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('P')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('p');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('P');
+        }else{
+            new_key->set_key('p');
+        }
         queue->push_event(new_key);
     }
 
 
    if(glfwGetKey('Q')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('q');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('Q');
+        }else{
+            new_key->set_key('q');
+        }
         queue->push_event(new_key);
     }
 
@@ -160,38 +216,62 @@ void KeyboardHandler::handle_input(){
 
     if(glfwGetKey('U')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('u');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('U');
+        }else{
+            new_key->set_key('u');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('V')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('v');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('V');
+        }else{
+            new_key->set_key('v');
+        }
         queue->push_event(new_key);
     }
 
 
     if(glfwGetKey('W')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('w');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('W');
+        }else{
+            new_key->set_key('w');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('X')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('x');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('X');
+        }else{
+            new_key->set_key('x');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('Y')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('y');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('Y');
+        }else{
+            new_key->set_key('y');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('Z')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('z');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('Z');
+        }else{
+            new_key->set_key('z');
+        }
         queue->push_event(new_key);
     }
 
@@ -222,19 +302,11 @@ void KeyboardHandler::handle_input(){
 
     if(glfwGetKey('=')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('=');
-        queue->push_event(new_key);
-    }
-
-    if(glfwGetKey('"')){
-        KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('"');
-        queue->push_event(new_key);
-    }
-
-    if(glfwGetKey('(')){
-        KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('(');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('+');
+        }else{
+            new_key->set_key('=');
+        }
         queue->push_event(new_key);
     }
 
@@ -244,6 +316,78 @@ void KeyboardHandler::handle_input(){
             new_key->set_key('_');
         }else{
             new_key->set_key('-');
+        }
+        queue->push_event(new_key);
+    }
+    if(glfwGetKey('1')){
+        KeyboardEvent* new_key = new KeyboardEvent(tick);
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('!');
+        }else{
+            new_key->set_key('1');
+        }
+        queue->push_event(new_key);
+    }
+    if(glfwGetKey('2')){
+        KeyboardEvent* new_key = new KeyboardEvent(tick);
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('@');
+        }else{
+            new_key->set_key('2');
+        }
+        queue->push_event(new_key);
+    }
+    if(glfwGetKey('3')){
+        KeyboardEvent* new_key = new KeyboardEvent(tick);
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('#');
+        }else{
+            new_key->set_key('3');
+        }
+        queue->push_event(new_key);
+    }
+    if(glfwGetKey('4')){
+        KeyboardEvent* new_key = new KeyboardEvent(tick);
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('$');
+        }else{
+            new_key->set_key('4');
+        }
+        queue->push_event(new_key);
+    }
+    if(glfwGetKey('5')){
+        KeyboardEvent* new_key = new KeyboardEvent(tick);
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('%');
+        }else{
+            new_key->set_key('5');
+        }
+        queue->push_event(new_key);
+    }
+    if(glfwGetKey('6')){
+        KeyboardEvent* new_key = new KeyboardEvent(tick);
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('^');
+        }else{
+            new_key->set_key('6');
+        }
+        queue->push_event(new_key);
+    }
+    if(glfwGetKey('7')){
+        KeyboardEvent* new_key = new KeyboardEvent(tick);
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('&');
+        }else{
+            new_key->set_key('7');
+        }
+        queue->push_event(new_key);
+    }
+    if(glfwGetKey('8')){
+        KeyboardEvent* new_key = new KeyboardEvent(tick);
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('*');
+        }else{
+            new_key->set_key('8');
         }
         queue->push_event(new_key);
     }
@@ -257,6 +401,7 @@ void KeyboardHandler::handle_input(){
         }
         queue->push_event(new_key);
     }
+
     if(glfwGetKey('0')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
         if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
@@ -267,27 +412,83 @@ void KeyboardHandler::handle_input(){
         queue->push_event(new_key);
     }
 
+    if(glfwGetKey('`')){
+        KeyboardEvent* new_key = new KeyboardEvent(tick);
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('~');
+        }else{
+            new_key->set_key('`');
+        }
+        queue->push_event(new_key);
+    }
+
     if(glfwGetKey(',')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key(',');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('<');
+        }else{
+            new_key->set_key(',');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('\'')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('\'');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('"');
+        }else{
+            new_key->set_key('\'');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('.')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('.');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('>');
+        }else{
+            new_key->set_key('.');
+        }
         queue->push_event(new_key);
     }
 
     if(glfwGetKey('/')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
-        new_key->set_key('/');
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('?');
+        }else{
+            new_key->set_key('/');
+        }
+        queue->push_event(new_key);
+    }
+
+    if(glfwGetKey('[')){
+        KeyboardEvent* new_key = new KeyboardEvent(tick);
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('{');
+        }else{
+            new_key->set_key('[');
+        }
+        queue->push_event(new_key);
+    }
+
+    if(glfwGetKey(']')){
+        KeyboardEvent* new_key = new KeyboardEvent(tick);
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('}');
+        }else{
+            new_key->set_key(']');
+        }
+        queue->push_event(new_key);
+    }
+
+    if(glfwGetKey('\\')){
+        KeyboardEvent* new_key = new KeyboardEvent(tick);
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key('|');
+        }else{
+            new_key->set_key('\\');
+        }
         queue->push_event(new_key);
     }
 

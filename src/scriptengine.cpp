@@ -15,6 +15,8 @@ ScriptingEngine::ScriptingEngine(ObjectFactory* factory_ptr){
 
     FILE* testscript = fopen("../scripts/grid.py","r");
     boost::python::handle<> ignored((PyRun_File(testscript, "grid.py", Py_file_input, main_namespace.ptr(), main_namespace.ptr() ) ));
+    catcher = PyObject_GetAttrString(main_module.ptr(), "catcher");
+
 
 }
 
@@ -22,7 +24,15 @@ ScriptingEngine::~ScriptingEngine(){
     Py_Finalize();
 }
 
+std::string ScriptingEngine::get_output(){
+    output = PyObject_GetAttrString(catcher, "data");
+    return std::string(PyString_AsString(output));
+}
+
+//std::string ScriptingEngine::execute_command(const std::string& command){
 void ScriptingEngine::execute_command(const std::string& command){
-    printf("executing command %s\n", command.c_str());
+    //printf("executing command %s\n", command.c_str());
     PyRun_SimpleString(command.c_str());
+    //output = PyObject_GetAttrString(catcher, "data");
+    //return std::string(PyString_AsString(output));
 }
