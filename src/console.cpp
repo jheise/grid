@@ -1,14 +1,17 @@
 #include "console.h"
 
-Console::Console(TextObject* text_obj, ScriptingEngine* eng_ptr){
-    write_state = new ConsoleWriteState(text_obj, eng_ptr);
+Console::Console(ScriptingEngine* eng_ptr){
+    write_state = new ConsoleWriteState(eng_ptr);
     wait_state = new ConsoleWaitState();
     current = wait_state;
-    write = false;
 }
 
 Console::~Console(){
 
+}
+
+void Console::update(float tick){
+    current->update(tick);
 }
 
 void Console::receive(Event* event, float tick){

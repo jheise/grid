@@ -16,7 +16,7 @@
 //grid files
 #include "keyboardevent.h"
 #include "console.h"
-#include "textobject.h"
+#include "textbox.h"
 #include "scriptengine.h"
 
 class Console;
@@ -26,20 +26,24 @@ class ConsoleState {
         virtual ~ConsoleState();
         virtual void handle_event(Console*, KeyboardEvent*, float);
         virtual void render();
+        virtual void update(float);
 };
 
 class ConsoleWriteState: public ConsoleState{
     public:
-        ConsoleWriteState(TextObject*, ScriptingEngine*);
+        ConsoleWriteState(ScriptingEngine*);
         ~ConsoleWriteState();
         void handle_event(Console*, KeyboardEvent*, float);
         void render();
+        void update(float);
+
     private:
-        std::vector<std::string> buffer;
         std::string current;
-        TextObject* text_object;
+        std::string last;
+        grid::textbox::TextBox* text_box;
         ScriptingEngine* script;
         float lastevent;
+        char block;
 };
 
 class ConsoleWaitState: public ConsoleState{
@@ -48,6 +52,7 @@ class ConsoleWaitState: public ConsoleState{
         ~ConsoleWaitState();
         void handle_event(Console*, KeyboardEvent*, float);
         void render();
+        void update(float);
     private:
 
 };

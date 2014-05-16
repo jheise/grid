@@ -32,6 +32,8 @@ void Engine::run(){
     glfwGetDesktopMode(&desktop);
     screenwidth = desktop.Width;
     screenheight = desktop.Height;
+    //screenwidth = 800.0f;
+    //screenheight = 600.0f;
 
     if(!glfwOpenWindow(screenwidth, screenheight, 0, 0, 0, 0, 32, 0, GLFW_FULLSCREEN)){
         throw std::runtime_error("glfwOpenWindow failed. does this hardware work with 3.1");
@@ -78,8 +80,13 @@ void Engine::run(){
     //start python
     printf("Initializing python\n");
     ScriptingEngine* script  = new ScriptingEngine(factory);
-    textobj = new TextObject();
-    console = new Console(textobj, script);
+    //textobj = new TextObject();
+    console = new Console( script);
+    //PangoTexture ptext = PangoTexture(std::string("Sans Bold 18"));
+    //ptext.generate(std::string("foobar"));
+    //ptext = new PangoTest();
+    //tbox = new grid::textbox::TextBox(-0.95, 0.95, 256, "Sans bold 18");
+    //tbox->append("NEW TEXT BOX\n");
     //Py_SetProgramName(argv[0]);
     //Py_Initialize();
     //PySys_SetArgv(argc, argv);
@@ -129,7 +136,8 @@ void Engine::display(){
     //Render model related text
 
     //Render UI elements
-    //textobj->render_text("Hello World", -0.95f, 0.83f, 2.0/1366, 2.0/768);
+
+    //Render console
     console->render();
 
     //clean up
@@ -164,6 +172,8 @@ void Engine::update(){
         console->receive(current_event, tick);
         delete( current_event);
     }
+    //update console
+    console->update(tick);
 
     //mouse
     glfwGetMousePos(&mouseX, &mouseY);

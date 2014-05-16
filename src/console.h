@@ -12,7 +12,6 @@
 //grid files
 #include "event.h"
 #include "keyboardevent.h"
-#include "textobject.h"
 #include "consolestate.h"
 #include "scriptengine.h"
 
@@ -22,17 +21,14 @@ class ConsoleWriteState;
 
 class Console {
     public:
-        Console(TextObject*, ScriptingEngine*);
+        Console(ScriptingEngine*);
         ~Console();
         void receive(Event*, float);
-        void update();
+        void update(float);
         void render();
         void switch_state();
 
     private:
-        /*std::vector<std::string> buffer;*/
-        /*std::string current;*/
-        bool write;
         ConsoleState* current;
         ConsoleWriteState* write_state;
         ConsoleWaitState*  wait_state;

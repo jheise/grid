@@ -24,6 +24,9 @@
 #include "gridobject.h"
 #include "Camera.h"
 #include "texture.h"
+#include "pangotexture.h"
+#include "pangotest.h"
+#include "textbox.h"
 #include "objectfactory.h"
 #include "scriptengine.h"
 #include "event.h"
@@ -71,6 +74,8 @@ class Engine {
         EscapeListener*     elistener;
         TextObject*         textobj;
         Console*            console;
+        PangoTest*          ptext;
+        grid::textbox::TextBox*            tbox;
 
         //replace later
         Shader* basicshader;

@@ -442,6 +442,16 @@ void KeyboardHandler::handle_input(){
         queue->push_event(new_key);
     }
 
+    if(glfwGetKey(';')){
+        KeyboardEvent* new_key = new KeyboardEvent(tick);
+        if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){
+            new_key->set_key(':');
+        }else{
+            new_key->set_key(';');
+        }
+        queue->push_event(new_key);
+    }
+
     if(glfwGetKey('.')){
         KeyboardEvent* new_key = new KeyboardEvent(tick);
         if(glfwGetKey(GLFW_KEY_LSHIFT) or glfwGetKey(GLFW_KEY_RSHIFT)){

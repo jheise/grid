@@ -5,15 +5,21 @@ void ConsoleState::handle_event(Console* console, KeyboardEvent* k_event, float 
 
 void ConsoleState::render(){ }
 
-ConsoleWriteState::ConsoleWriteState(TextObject* textobj, ScriptingEngine* scriptobj){
-    text_object = textobj;
+void ConsoleState::update(float tick){ }
+
+ConsoleWriteState::ConsoleWriteState( ScriptingEngine* scriptobj){
+    text_box = new grid::textbox::TextBox(-0.95, 0.95, 256, "Sans bold 18");
     script = scriptobj;
-    current = std::string("");
+    //current = std::string("");
     lastevent = 0;
-    std::vector<std::string>strings = split_string(script->get_output(), "\n");
-    for(int i=0; i < strings.size(); i++){
-        buffer.push_back(strings[i]);
-    }
+    //block = 176;
+    block = '%';
+    text_box->append(script->get_output());
+    text_box->append(&block);
+    //std::vector<std::string>strings = split_string(script->get_output(), "\n");
+    //for(int i=0; i < strings.size(); i++){
+        //buffer.push_back(strings[i]);
+    //}
 
 }
 
@@ -30,23 +36,34 @@ void ConsoleWriteState::handle_event(Console* console, KeyboardEvent* k_event, f
         console->switch_state();
     }
 
-    if(diff > tick * 2.0){
+    if(diff > tick * 1.25){
         if(  key > 31 and key < 256){
             current += key;
+            text_box->pop_back();
+            text_box->append((char*)&key);
+            text_box->append(&block);
         }
         if( key == 259 ){
-            current = current.substr(0, current.size() - 1);
+            if(current.length() > 0){
+                current.pop_back();
+                text_box->pop_back();
+                text_box->pop_back();
+                text_box->append(&block);
+            }
         }
 
         if( key == 257 ){
             if(current != ""){
+                text_box->pop_back();
+                text_box->append("\n");
+                text_box->append("\n");
+                printf("current is '%s'.",current.c_str());
                 script->execute_command(current + "\n");
                 std::string output = script->get_output();
-                buffer.push_back(current);
-                std::vector<std::string>strings = split_string(output, "\n");
-                for(int i=0; i < strings.size(); i++){
-                    buffer.push_back(strings[i]);
-                }
+                text_box->pop_back();
+                text_box->append(output);
+                //text_box->append("\n");
+                text_box->append(&block);
                 current = std::string("");
             }
         }
@@ -56,13 +73,18 @@ void ConsoleWriteState::handle_event(Console* console, KeyboardEvent* k_event, f
 
 void ConsoleWriteState::render(){
     //text_object->render_text("Hello World", -0.95, 0.83f, 2.0/1366, 2.0/768);
-    float startx = -0.95;
-    float starty = 0.83;
-    for(int i=0; i < buffer.size(); i++){
-        text_object->render_text(buffer[i].c_str(), startx, starty, 2.0/1366, 2.0/768);
-        starty -= .1;
-    }
-    text_object->render_text(current.c_str(), startx, starty, 2.0/1366, 2.0/768);
+    //float startx = -0.95;
+    //float starty = 0.83;
+    //for(int i=0; i < buffer.size(); i++){
+    //text_object->render_text(buffer[i].c_str(), startx, starty, 2.0/1366, 2.0/768);
+    //starty -= .1;
+    //}
+    //text_object->render_text(current.c_str(), startx, starty, 2.0/1366, 2.0/768);
+    text_box->render();
+}
+
+void ConsoleWriteState::update(float tick){
+    text_box->update(tick);
 }
 
 ConsoleWaitState::ConsoleWaitState(){
@@ -83,3 +105,5 @@ void ConsoleWaitState::handle_event(Console* console, KeyboardEvent* k_event, fl
 }
 
 void ConsoleWaitState::render(){ }
+
+void ConsoleWaitState::update(float tick){ }
