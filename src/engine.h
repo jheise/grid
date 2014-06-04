@@ -27,6 +27,7 @@
 #include "pangotexture.h"
 #include "pangotest.h"
 #include "textbox.h"
+#include "light.h"
 #include "objectfactory.h"
 #include "scriptengine.h"
 #include "event.h"

@@ -16,7 +16,7 @@ GridObject::GridObject(Shader* shader_reference, const std::string& modelPath, c
 }
 
 GridObject::~GridObject(){
-    printf("OBJECT GOES AWAY NOW\n");
+    //printf("OBJECT GOES AWAY NOW\n");
 }
 
 void GridObject::display(glm::mat4& view){
@@ -29,6 +29,10 @@ void GridObject::display(glm::mat4& view){
     glUniformMatrix4fv(ucamera, 1, GL_FALSE, &view[0][0]);
 
     model->display(view);
+
+    //clean up
+    glBindVertexArray(0);
+    glUseProgram(0);
 }
 
 void GridObject::update(float tick){

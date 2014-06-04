@@ -99,7 +99,7 @@ void Engine::run(){
     //Load models from python
     printf("building geometry\n");
 
-    printf("Running...\t\t");
+    printf("Running...\n");
     fflush(stdout);
     while(glfwGetWindowParam(GLFW_OPENED)){
 
@@ -142,6 +142,7 @@ void Engine::display(){
 
     //clean up
     glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
     glUseProgram(0);
 
     glfwSwapBuffers();

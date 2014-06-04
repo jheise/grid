@@ -57,7 +57,7 @@ void ConsoleWriteState::handle_event(Console* console, KeyboardEvent* k_event, f
                 text_box->pop_back();
                 text_box->append("\n");
                 text_box->append("\n");
-                printf("current is '%s'.",current.c_str());
+                printf("current is '%s'.\n",current.c_str());
                 script->execute_command(current + "\n");
                 std::string output = script->get_output();
                 text_box->pop_back();

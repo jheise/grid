@@ -94,5 +94,5 @@ void Mesh::display(glm::mat4& view, const std::vector<Texture*>& textures){
 
     //draw triangles
     glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, NULL);
-    //texture->unbind();
+    textures[material]->unbind();
 }

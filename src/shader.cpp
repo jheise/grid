@@ -12,7 +12,7 @@ Shader::Shader( const std::string& vertexpath, const std::string& fragpath){
 }
 
 Shader::~Shader(){
-    printf( "Shader Unloaded\n");
+    //printf( "Shader Unloaded\n");
 }
 
 void Shader::assemble(){

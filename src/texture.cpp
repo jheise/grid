@@ -62,4 +62,5 @@ void Texture::bind(GLuint uniform){
 
 void Texture::unbind(){
     //printf("unbinding\n");
+    glBindTexture(GL_TEXTURE_2D, 0);
 }

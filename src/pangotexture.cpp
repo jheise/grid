@@ -43,7 +43,7 @@ void PangoTexture::generate(const std::string& text){
     height /= PANGO_SCALE;
 
     //printf("width is %d\n", width);
-    //printf("height is %d\n", height);
+    //printf("pango height is %d\n", height);
 
     surface_data = (unsigned char*)calloc(4 * width * height, sizeof(unsigned char));
     surface = cairo_image_surface_create_for_data(surface_data,
@@ -75,13 +75,14 @@ void PangoTexture::generate(const std::string& text){
 
 void PangoTexture::bind(GLuint uniform){
     glActiveTexture(GL_TEXTURE0);
+    //printf("pango texture id is %d\n", texture_id);
     glBindTexture(GL_TEXTURE_2D, texture_id);
     glUniform1i(uniform, texture_id);
 
 }
 
 void PangoTexture::unbind(){
-
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 int PangoTexture::get_width(){
