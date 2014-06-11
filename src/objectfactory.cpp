@@ -31,3 +31,7 @@ std::vector<GridObject*> ObjectFactory::get_objects(){
 void ObjectFactory::return_object(GridObject*){
 
 }
+
+Shader* ObjectFactory::get_shader(){
+    return shader;
+}

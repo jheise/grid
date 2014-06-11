@@ -1,3 +1,4 @@
+#pragma once
 //opengl libs
 #include <GL/glew.h>
 #include <GL/glfw.h>
@@ -11,6 +12,8 @@ namespace grid {
                 ~Light();
                 void set_position(glm::vec3);
                 void set_intensities(glm::vec3);
+                void turnon(GLuint, GLuint);
+                void turnoff();
                 glm::vec3 get_position();
                 glm::vec3 get_intensities();
 

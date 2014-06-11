@@ -1,11 +1,32 @@
 #version 140
-
+uniform mat4 model;
 uniform sampler2D textureUniform;
 
+struct Light {
+    vec3 position;
+    vec3 intensities;
+};
+
+uniform Light light;
+
+in vec3 fragPosition;
 in vec2 fragUV;
+in vec3 fragNormal;
 
 out vec4 finalColor;
 
 void main(){
-    finalColor = texture(textureUniform, fragUV);
+    mat3 normalMatrix = transpose(inverse(mat3(model)));
+    vec3 normal = normalize(normalMatrix * fragNormal);
+
+    vec3 fragLocation = vec3(model * vec4(fragPosition, 1));
+    vec3 surfaceToLight = light.position - fragLocation;
+
+    float brightness = dot(normal, surfaceToLight) / (length(surfaceToLight) * length(normal));
+    brightness = clamp(brightness, 0, 1);
+
+    vec4 colors = vec4(light.intensities, 1);
+
+    finalColor = brightness * colors * texture(textureUniform, fragUV);
+    finalColor.a = 1;
 }

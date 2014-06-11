@@ -6,6 +6,7 @@ std::string find_file(const std::string& fileroot, const std::string& filename){
     path p(fileroot.c_str());
     path fn(filename.c_str());
     if( !exists(p)){
+        printf( "file not found: %s\n", fileroot.c_str());
         throw std::runtime_error("file not found");
     }
     std::string realname = fn.filename().string();
@@ -17,6 +18,7 @@ std::string find_file(const std::string& fileroot, const std::string& filename){
             return itr->path().string();
         }
     }
+    printf( "file not found: %s\n", filename.c_str());
     throw std::runtime_error("file not found");
 }
 

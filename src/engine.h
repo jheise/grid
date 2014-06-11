@@ -28,6 +28,7 @@
 #include "pangotest.h"
 #include "textbox.h"
 #include "light.h"
+#include "lightfactory.h"
 #include "objectfactory.h"
 #include "scriptengine.h"
 #include "event.h"
@@ -38,11 +39,12 @@
 #include "textobject.h"
 #include "console.h"
 
-
+using namespace std;
+using namespace grid;
 
 class Engine {
     public:
-        Engine(int ,char**,float, float);
+        Engine(float, float);
 
         ~Engine();
 
@@ -67,20 +69,18 @@ class Engine {
 
         Camera* camera;
 
-        ObjectFactory*      factory;
-        EventQueue*         queue;
-        ScriptingEngine*    script;
-        KeyboardHandler*    keyboard;
-        CameraListener*     clistener;
-        EscapeListener*     elistener;
-        TextObject*         textobj;
-        Console*            console;
-        PangoTest*          ptext;
-        grid::textbox::TextBox*            tbox;
+        ObjectFactory*          factory;
+        light::LightFactory*    lightfactory;
+        EventQueue*             queue;
+        ScriptingEngine*        script;
+        KeyboardHandler*        keyboard;
+        CameraListener*         clistener;
+        EscapeListener*         elistener;
+        TextObject*             textobj;
+        Console*                console;
 
         //replace later
-        Shader* basicshader;
-        int argc;
-        char** argv;
+        /*Shader* basicshader;*/
+        /*light::Light* basiclight;*/
 
 };

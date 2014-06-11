@@ -33,12 +33,18 @@ Mesh::Mesh(aiMesh* mesh){
             vertices[i * 3 + 0] = mesh->mVertices[i].x;
             vertices[i * 3 + 1] = mesh->mVertices[i].y;
             vertices[i * 3 + 2] = mesh->mVertices[i].z;
+            //printf("loading positions\n");
+
         }
 
         if( mesh->HasNormals()){
             normals[i * 3 + 0] = mesh->mNormals[i].x;
-            normals[i * 3 + 1] = mesh->mNormals[i].x;
-            normals[i * 3 + 2] = mesh->mNormals[i].x;
+            normals[i * 3 + 1] = mesh->mNormals[i].y;
+            normals[i * 3 + 2] = mesh->mNormals[i].z;
+            //printf("loading normals\n");
+            //printf("n1 = %f\n", mesh->mNormals[i].x);
+            //printf("n2 = %f\n", mesh->mNormals[i].x);
+            //printf("n3 = %f\n", mesh->mNormals[i].x);
         }
 
         if(mesh->HasTextureCoords(0)){
@@ -95,4 +101,7 @@ void Mesh::display(glm::mat4& view, const std::vector<Texture*>& textures){
     //draw triangles
     glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, NULL);
     textures[material]->unbind();
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
 }

@@ -34,16 +34,17 @@ add_executable(grid
     src/shader.cpp
     src/texture.cpp
     src/mesh.cpp
+    src/light.cpp
     src/model.cpp
     src/textobject.cpp
     src/pangotexture.cpp
-    src/pangotest.cpp
     src/textbox.cpp
     src/utils.cpp
     src/event.cpp
     src/keyboardevent.cpp
     src/eventqueue.cpp
     src/gridobject.cpp
+    src/lightfactory.cpp
     src/objectfactory.cpp
     src/Camera.cpp
     src/keyboardhandler.cpp
@@ -56,5 +57,4 @@ add_executable(grid
     src/engine.cpp
     src/grid.cpp
     )
-MESSAGE("pangocairo lib is ${PANGOCAIRO_LIBRARY}")
 target_link_libraries(grid GL GLEW glfw assimp IL ILU ILUT cairo pango-1.0 ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${Boost_PYTHON_LIBRARY} ${PYTHON_LIBRARIES} ${FREETYPE_LIBRARIES} ${Pango_1_0_LIBRARIES} ${PANGOCAIRO_LIBRARY})

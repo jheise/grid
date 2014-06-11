@@ -1,8 +1,11 @@
 #include "engine.h"
+using namespace std;
+using namespace grid;
+using namespace glm;
 
-Engine::Engine(int arg_c, char** arg_v, float width, float height){
-    screenwidth = width;
-    screenheight = height;
+Engine::Engine(float width, float height){
+    //screenwidth = width;
+    //screenheight = height;
     lastTime = glfwGetTime();
     camera = new Camera();
     queue  = new EventQueue();
@@ -12,15 +15,13 @@ Engine::Engine(int arg_c, char** arg_v, float width, float height){
     moveSpeed = 4.0;
     mouseSensitivity = 0.1;
     pause = false;
-    argc = arg_c;
-    argv = arg_v;
 }
 
 void Engine::run(){
 
     //initialize glfw
     if(!glfwInit()){
-        throw std::runtime_error("glfwInit Failed");
+        throw runtime_error("glfwInit Failed");
     }
     glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 4);
     glfwOpenWindowHint(0, GLFW_OPENGL_CORE_PROFILE);
@@ -32,20 +33,18 @@ void Engine::run(){
     glfwGetDesktopMode(&desktop);
     screenwidth = desktop.Width;
     screenheight = desktop.Height;
-    //screenwidth = 800.0f;
-    //screenheight = 600.0f;
 
     if(!glfwOpenWindow(screenwidth, screenheight, 0, 0, 0, 0, 32, 0, GLFW_FULLSCREEN)){
-        throw std::runtime_error("glfwOpenWindow failed. does this hardware work with 3.1");
+        throw runtime_error("glfwOpenWindow failed. does this hardware work with 3.1");
     }
 
     glewExperimental = GL_TRUE;
     if(glewInit() != GLEW_OK){
-        throw std::runtime_error("glewInit failed");
+        throw runtime_error("glewInit failed");
     }
 
     if(!GLEW_VERSION_3_1){
-        throw std::runtime_error("OpenGL 3.1 API is not available");
+        throw runtime_error("OpenGL 3.1 API is not available");
     }
 
     //enable certain functions
@@ -77,22 +76,24 @@ void Engine::run(){
     //create object factory
     factory = new ObjectFactory();
 
+    //create light factory
+    lightfactory = new light::LightFactory();
+
+    //make light for testing, later expand into scripting engine
+    //lightfactory->create_light(0, 0, 8, 1, 0, 1);
+
     //start python
     printf("Initializing python\n");
-    ScriptingEngine* script  = new ScriptingEngine(factory);
+    ScriptingEngine* script  = new ScriptingEngine(factory, lightfactory);
     //textobj = new TextObject();
     console = new Console( script);
-    //PangoTexture ptext = PangoTexture(std::string("Sans Bold 18"));
-    //ptext.generate(std::string("foobar"));
-    //ptext = new PangoTest();
-    //tbox = new grid::textbox::TextBox(-0.95, 0.95, 256, "Sans bold 18");
-    //tbox->append("NEW TEXT BOX\n");
+
     //Py_SetProgramName(argv[0]);
     //Py_Initialize();
     //PySys_SetArgv(argc, argv);
 
     //initialize camera
-    camera->setPosition(glm::vec3(0,0,8));
+    camera->setPosition(vec3(0,0,8));
     camera->setViewportAspectRatio(screenwidth/screenheight);
 
 
@@ -110,9 +111,6 @@ void Engine::run(){
         update();
         display();
 
-        //if(glfwGetKey(GLFW_KEY_ESC)){
-            //glfwCloseWindow();
-        //}
     }
     //Py_Finalize();
     glfwTerminate();
@@ -121,15 +119,20 @@ void Engine::run(){
 
 void Engine::display(){
     //setup
-    glClearColor(1, 1, 1, 1);
+    //glClearColor(0, 0, 0, 1); //clear black
+    glClearColor(1, 1, 1, 1);   //clear white
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glm::mat4 view = camera->matrix();
+    mat4 view = camera->matrix();
+
+    //grab lights
+    vector<light::Light*> lights = lightfactory->get_lights();
+
 
     //Render all models
-    std::vector<GridObject*> objects = factory->get_objects();
+    vector<GridObject*> objects = factory->get_objects();
     for(int i = 0; i < objects.size(); i++){
-        objects[i]->display(view);
+        objects[i]->display(view, lights);
     }
 
 
@@ -159,7 +162,7 @@ void Engine::update(){
 
     if(!pause){
         //update all objects
-        std::vector<GridObject*> objects = factory->get_objects();
+        vector<GridObject*> objects = factory->get_objects();
         for(int i = 0; i < objects.size(); i++){
             objects[i]->update(tick);
         }
@@ -201,8 +204,8 @@ void Engine::glPrintError(){
 
     if (errorCode != GL_NO_ERROR)
     {
-        std::string error = "unknown error";
-        std::string description  = "no description";
+        string error = "unknown error";
+        string description  = "no description";
 
         // Decode the error code
         switch (errorCode)
@@ -254,7 +257,7 @@ void Engine::glPrintError(){
                 break;
             }
         }
-        std::cerr << "OpenGL Error: "  << error << ", " << description << std::endl;
+        cerr << "OpenGL Error: "  << error << ", " << description << endl;
         exit(1);
     }
 }

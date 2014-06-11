@@ -9,7 +9,7 @@ Light::Light(glm::vec3 pos, glm::vec3 intens){
 }
 
 Light::~Light(){
-
+    turnoff();
 }
 
 void Light::set_position(glm::vec3 newpos){
@@ -26,4 +26,13 @@ glm::vec3 Light::get_position(){
 
 glm::vec3 Light::get_intensities(){
     return intensities;
+}
+
+void Light::turnon(GLuint upos, GLuint uint ){
+    glUniform3fv(upos, 1, &position[0]);
+    glUniform3fv(uint, 1, &intensities[0]);
+}
+
+void Light::turnoff(){
+
 }

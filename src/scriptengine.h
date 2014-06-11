@@ -17,10 +17,11 @@
 
 //grid files
 #include "objectfactory.h"
+#include "lightfactory.h"
 
 class ScriptingEngine {
     public:
-        ScriptingEngine(ObjectFactory*);
+        ScriptingEngine(ObjectFactory*, grid::light::LightFactory*);
 
         ~ScriptingEngine();
 
@@ -29,8 +30,9 @@ class ScriptingEngine {
         std::string get_output();
 
     private:
-        ObjectFactory* factory;
-        boost::python::object main_namespace;
-        PyObject* catcher;
-        PyObject* output;
+        ObjectFactory*              factory;
+        grid::light::LightFactory*  lightfactory;
+        boost::python::object       main_namespace;
+        PyObject*                   catcher;
+        PyObject*                   output;
 };

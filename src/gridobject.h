@@ -22,6 +22,7 @@
 //grid files
 #include "shader.h"
 #include "model.h"
+#include "light.h"
 #include "utils.h"
 
 class GridObject {
@@ -32,14 +33,14 @@ class GridObject {
 
         ~GridObject();
 
-        void display(glm::mat4&);
+        void display(glm::mat4&, std::vector<grid::light::Light*>);
 
         void update(float);
 
     private:
         Shader* shader;
         Model* model;
-        GLuint umodel, ucamera, utexture;
+        GLuint umodel, ucamera, utexture, ulightpos, ulightint;
         glm::mat4 identity;
         float degree;
 

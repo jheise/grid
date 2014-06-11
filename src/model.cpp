@@ -7,20 +7,22 @@ Model::Model(const std::string& modelPath, const std::string& modelName){
     if(!fin.fail()){
         fin.close();
     }else{
+        printf( "cound not open file %s",fullPath.c_str());
         throw std::runtime_error("could not open file" + fullPath);
     }
     //file can be opened, import it
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile( fullPath,
               aiProcessPreset_TargetRealtime_Fast |
-              //aiProcess_CalcTangentSpace      |
+              aiProcess_CalcTangentSpace      |
               aiProcess_Triangulate           |
-              aiProcess_GenSmoothNormals      |
-              //aiProcess_FlipUVs
-              aiProcess_JoinIdenticalVertices //|
-          //aiProcess_SortByPType);
+              //aiProcess_GenSmoothNormals      |
+              //aiProcess_FlipUVs               |
+              aiProcess_JoinIdenticalVertices |
+              aiProcess_SortByPType
     );
     if(!scene){
+        printf( "importer error: %s\n", importer.GetErrorString());
         throw std::runtime_error(importer.GetErrorString());
     }
 

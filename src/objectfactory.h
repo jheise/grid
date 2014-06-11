@@ -9,9 +9,6 @@
 #include <iostream>
 #include <vector>
 
-//python
-/*#include <boost/python.hpp>*/
-
 //grid headers
 #include "shader.h"
 #include "gridobject.h"
@@ -24,6 +21,7 @@ class ObjectFactory {
         void create_object(const std::string&, const std::string&);
         std::vector<GridObject*> get_objects();
         void return_object(GridObject*);
+        Shader* get_shader();
 
     private:
         Shader* shader;

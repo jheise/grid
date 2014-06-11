@@ -4,10 +4,18 @@ uniform mat4 camera;
 
 in vec3 position;
 in vec2 uv;
+in vec3 normal;
 
+out vec3 fragPosition;
 out vec2 fragUV;
+out vec3 fragNormal;
 
 void main(){
+    //pass variables onto fragment shader
+    fragPosition = position;
     fragUV = uv;
+    fragNormal = normal;
+
+    //set vertex
     gl_Position = camera * model * vec4(position, 1);
 }
