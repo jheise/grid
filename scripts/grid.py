@@ -34,7 +34,7 @@ def fail():
 
 from time import time,ctime
 #lightfactory.create_light(0, 0, 8, 0, 0, 1) #blue
-lightfactory.create_light(0, 0, 8, 1, 1, 1) #white
+lightfactory.create_light(0, 16, 8, 1, 1, 1) #white
 #lightfactory.create_light(0, 0, 8, 0, 0, 0) #black
 print "Grid Online", ctime(time())
 
