@@ -20,8 +20,8 @@ ScriptingEngine::ScriptingEngine(ObjectFactory* factory_ptr, light::LightFactory
 
     main_namespace["lightfactory"] = boost::python::ptr(lightfactory);
 
-    FILE* testscript = fopen("../scripts/grid.py","r");
-    boost::python::handle<> ignored((PyRun_File(testscript, "grid.py", Py_file_input, main_namespace.ptr(), main_namespace.ptr() ) ));
+    FILE* testscript = fopen("../scripts/scripting.py","r");
+    boost::python::handle<> ignored((PyRun_File(testscript, "scripting.py", Py_file_input, main_namespace.ptr(), main_namespace.ptr() ) ));
     catcher = PyObject_GetAttrString(main_module.ptr(), "catcher");
 
 
