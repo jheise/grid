@@ -15,8 +15,9 @@ GridObject::GridObject(Shader* shader_reference, const std::string& modelPath, c
     umodel = shader->handleUniform("model");
     ucamera = shader->handleUniform("camera");
     utexture = shader->handleUniform("textureUniform");
-    ulightpos = shader->handleUniform("light.position");
-    ulightint = shader->handleUniform("light.intensities");
+    ulightcount = shader->handleUniform("numlights");
+    //ulightpos = shader->handleUniform("light[0].position");
+    //ulightint = shader->handleUniform("light[0].intensities");
     degree = 0;
 
 }
@@ -35,8 +36,18 @@ void GridObject::display(glm::mat4& view, vector<light::Light*> lights){
     glUniformMatrix4fv(ucamera, 1, GL_FALSE, &view[0][0]);
 
     //push light data
-    glUniform3fv(ulightpos, 1, &lights[0]->get_position()[0]);
-    glUniform3fv(ulightint, 1, &lights[0]->get_intensities()[0]);
+    glUniform1i(ulightcount, (int)lights.size());
+    for( int i=0; i < (int)lights.size(); i++){
+        std::ostringstream ss;
+        std::ostringstream sa;
+        ss << "light[" << i << "].position";
+        std::string uniform_name = ss.str();
+        sa << "light[" << i << "].intensities";
+        std::string other_name = sa.str();
+
+        shader->processLightUniform(uniform_name.c_str(), &lights[0]->get_position()[0]);
+        shader->processLightUniform(other_name.c_str(), &lights[0]->get_intensities()[0]);
+    }
 
     model->display(view);
 

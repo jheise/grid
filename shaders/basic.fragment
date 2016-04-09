@@ -7,7 +7,11 @@ struct Light {
     vec3 intensities;
 };
 
-uniform Light light;
+// constant to determine maximum number of lights to process
+#define MAXLIGHTS 10
+
+uniform int numlights;
+uniform Light light[MAXLIGHTS];
 
 in vec3 fragPosition;
 in vec2 fragUV;
@@ -20,13 +24,16 @@ void main(){
     vec3 normal = normalize(normalMatrix * fragNormal);
 
     vec3 fragLocation = vec3(model * vec4(fragPosition, 1));
-    vec3 surfaceToLight = light.position - fragLocation;
 
-    float brightness = dot(normal, surfaceToLight) / (length(surfaceToLight) * length(normal));
-    brightness = clamp(brightness, 0, 1);
+    vec4 new_colors = vec4(0);
+    for( int i = 0; i < numlights; i++){
+        vec3 surfaceToLight = light[i].position - fragLocation;
+        float brightness = dot(normal, surfaceToLight) / (length(surfaceToLight) * length(normal));
+        brightness = clamp(brightness, 0, 1);
+        vec4 temp_colors = vec4(light[0].intensities, 1);
+        new_colors += brightness * temp_colors * texture(textureUniform, fragUV);
+    }
 
-    vec4 colors = vec4(light.intensities, 1);
-
-    finalColor = brightness * colors * texture(textureUniform, fragUV);
+    finalColor = new_colors;
     finalColor.a = 1;
 }

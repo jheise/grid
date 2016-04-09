@@ -11,8 +11,8 @@
 //opengl libs
 #include <GL/glew.h>
 #include <GL/glfw.h>
-#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/glm.hpp>
 
 //assimp libs
 #include <assimp/Importer.hpp>
@@ -40,7 +40,7 @@ class GridObject {
     private:
         Shader* shader;
         Model* model;
-        GLuint umodel, ucamera, utexture, ulightpos, ulightint;
+        GLuint umodel, ucamera, utexture, ulightpos, ulightint, ulightcount;
         glm::mat4 identity;
         float degree;
 

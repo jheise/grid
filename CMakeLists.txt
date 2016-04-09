@@ -57,4 +57,6 @@ add_executable(grid
     src/engine.cpp
     src/grid.cpp
     )
-target_link_libraries(grid GL GLEW glfw assimp IL ILU ILUT cairo pango-1.0 ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${Boost_PYTHON_LIBRARY} ${PYTHON_LIBRARIES} ${FREETYPE_LIBRARIES} ${Pango_1_0_LIBRARIES} ${PANGOCAIRO_LIBRARY})
+MESSAGE("Boost system lib is ${Boost_SYSTEM_LIBRARY}")
+#target_link_libraries(grid GL GLEW glfw assimp IL ILU ILUT cairo pango-1.0 ${Boost_SYSTEM_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${Boost_PYTHON_LIBRARY} ${PYTHON_LIBRARIES} ${FREETYPE_LIBRARIES} ${Pango_1_0_LIBRARIES} ${PANGOCAIRO_LIBRARY})
+target_link_libraries(grid GL GLEW glfw assimp IL ILU ILUT cairo pango-1.0 /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_python.so ${PYTHON_LIBRARIES} ${FREETYPE_LIBRARIES} ${Pango_1_0_LIBRARIES} ${PANGOCAIRO_LIBRARY})

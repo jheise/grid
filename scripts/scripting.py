@@ -19,10 +19,14 @@ def fail():
 
 
 from time import time,ctime
-#lightfactory.create_light(0, 0, 8, 0, 0, 1) #blue
+#lightfactory.create_light(0, 8, 8, 0, 0, 1) #blue
 lightfactory.create_light(0, 0, 8, 1, 1, 1) #white
 #lightfactory.create_light(0, 0, 8, 0, 0, 0) #black
-print "Grid Online", ctime(time())
+
+#lightfactory.create_light(8, 0, 8, 1, 0, 0) #red
+#lightfactory.create_light(0, 0, 8, 0, 1, 0) #green
+#lightfactory.create_light(-8, 0, 8, 0, 0, 1) #blue
+print "Grid Online %s".format(ctime(time()))
 
 make_tardis()
 #print "Creating TARDIS"

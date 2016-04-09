@@ -12,11 +12,11 @@ float screenwidth = 800.0f;
 float screenheight = 600.0f;
 
 int main(int argc, char *argv[]){
-    try{
+    //try{
         Engine engine = Engine(screenwidth, screenheight);
         engine.run();
-    } catch(...){
-        printf("EXCEPTION\n");
-    }
+        //} catch(...){
+        //printf("EXCEPTION\n");
+        //}
     return 0;
 }

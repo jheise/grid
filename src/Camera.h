@@ -17,8 +17,6 @@
  limitations under the License.
  */
 
-#pragma once
-
 #include <glm/glm.hpp>
 
 

@@ -25,6 +25,8 @@ class Shader{
 
         GLuint handleAttribute( const std::string&);
 
+        void processLightUniform( const std::string&, const GLfloat*);
+
         void activate();
 
     private:

@@ -68,6 +68,7 @@ GLuint Shader::handleShader( const std::string& shaderpath, GLenum shaderType){
     GLint status;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
     if(status == GL_FALSE){
+        printf("failed to compile shader %s\n",shaderpath.c_str());
         std::string msg("Failed to compile shader:\n");
 
         GLint infologlen;
@@ -93,6 +94,15 @@ GLuint Shader::handleUniform( const std::string& uniform){
         throw std::runtime_error(std::string("program uniform not found:"));
     }
     return uniform_value;
+}
+
+void Shader::processLightUniform( const std::string& uniform, const GLfloat *value){
+    GLuint uniform_value = -1;
+    uniform_value = glGetUniformLocation(shaderprogram, uniform.c_str());
+    if(uniform_value == -1){
+        throw std::runtime_error(std::string("program uniform not found:"));
+    }
+    glUniform3fv(uniform_value, 1, value);
 }
 
 GLuint Shader::handleAttribute( const std::string& attribute){
